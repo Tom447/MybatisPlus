@@ -13,4 +13,28 @@
         </if>
         LIMIT 10
     </select>
+    <select id="findByCustom" resultType="com.itheima.mp.domain.po.User">
+        select *
+        from user ${ew.customeSqlSegment}
+    </select>
+        
+    <select id="queryUserByIdAndAddr" resultType="com.itheima.mp.domain.po.User">
+        SELECT *
+        FROM user u
+        JOIN address a ON u.id = a.user_id
+        WHERE
+        u.id IN
+        <foreach collection="ids" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+        AND a.city = #{city}
+    </select>
+
+    <select id="queryUsersByWrapper" resultType="com.itheima.mp.domain.po.User">
+        SELECT u.*
+        FROM user u
+                 INNER JOIN address a on u.id = a.user_id
+            ${ew.customSqlSegment}
+    </select>
+
 </mapper>
