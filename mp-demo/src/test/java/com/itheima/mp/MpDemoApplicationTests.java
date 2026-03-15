@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.AES;
 import com.itheima.mp.domain.po.User;
 import com.itheima.mp.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
@@ -186,6 +187,19 @@ class MpDemoApplicationTests {
         list.forEach(System.out::println);
     }
 
+    @Test
+    void contextLoads() {
+        // 生成 16 位随机 AES 密钥
+        String randomKey = AES.generateRandomKey();
+        System.out.println("randomKey = " + randomKey);
 
+        // 利用密钥对用户名加密
+        String username = AES.encrypt("root", randomKey);
+        System.out.println("username = " + username);
+
+        // 利用密钥对用户名加密
+        String password = AES.encrypt("123456", randomKey);
+        System.out.println("password = " + password);
+    }
 
 }

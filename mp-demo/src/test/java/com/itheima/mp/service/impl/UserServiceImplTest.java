@@ -15,7 +15,7 @@ import java.util.List;
 
 
 
-@SpringBootTest
+@SpringBootTest(args = "--mpw.key=4bfb85730b7c6de8")
 class UserServiceImplTest {
     @Autowired
     private IUserService userService;
@@ -179,20 +179,20 @@ class UserServiceImplTest {
 
     @Test
     void testNewSaveUser(){
-      /*  User user = new User();
-        user.setUsername("小马7");
+        User user = new User();
+        user.setUsername("小马8");
         user.setPassword("123");
         user.setPhone("18688990011");
-        user.setBalance(20000);
-        UserInfo userInfo = UserInfo.of(24, "英文老师", "female");
+        user.setBalance(3000);
+        UserInfo userInfo = UserInfo.of(24, "Java老师", "male");
         //user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
         user.setInfo(userInfo);
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
 
-        userService.save(user);*/
+        userService.save(user);
 
-        User one = userService.getOne(new QueryWrapper<User>().like("username", "小马7"));
+        User one = userService.getOne(new QueryWrapper<User>().like("username", "小马8"));
         System.out.println(one);
     }
 
