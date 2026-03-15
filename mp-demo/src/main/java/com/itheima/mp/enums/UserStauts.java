@@ -2,6 +2,7 @@ package com.itheima.mp.enums;
 
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public enum UserStauts {
     ;
     @EnumValue
     private final int value;
+    @JsonValue
     private final String desc;
 
     UserStauts(int value, String desc) {
