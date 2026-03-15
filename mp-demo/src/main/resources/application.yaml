@@ -15,3 +15,9 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto # id为自增长
+      logic-delete-field: deleted #逻辑生成字段
+  configuration:
+#    mybatisplus的全局枚举处理器
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+
+

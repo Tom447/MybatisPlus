@@ -2,6 +2,8 @@ package com.itheima.mp.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itheima.mp.domain.po.User;
+import com.itheima.mp.domain.po.UserInfo;
+import com.itheima.mp.enums.UserStauts;
 import com.itheima.mp.service.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ class UserServiceImplTest {
         user.setPassword("123");
         user.setPhone("18688990011");
         user.setBalance(20000);
-        user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
+        //user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
 
@@ -75,7 +77,7 @@ class UserServiceImplTest {
         user.setPassword("123");
         user.setPhone("" + (18688190000L + i));
         user.setBalance(2000);
-        user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
+        //user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(user.getCreateTime());
         return user;
@@ -151,6 +153,48 @@ class UserServiceImplTest {
                 .update();
     }
 
+    //枚举测试
+    @Test
+    void testEnumSaveUser() {
+        User user = new User();
+        user.setUsername("any");
+        user.setPassword("123");
+        user.setPhone("18688990011");
+        user.setBalance(200);
+        //user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
+        user.setStatus(UserStauts.NORMAL);
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
+        userService.save(user);
+
+        User result = userService.getOne(new QueryWrapper<>(new User()).eq("username", "any"));
+        System.out.println(result);
+    }
+
+    @Test
+    void testEnumsGetOneById(){
+        User user = userService.getById(1L);
+        System.out.println(user);
+    }
+
+    @Test
+    void testNewSaveUser(){
+      /*  User user = new User();
+        user.setUsername("小马7");
+        user.setPassword("123");
+        user.setPhone("18688990011");
+        user.setBalance(20000);
+        UserInfo userInfo = UserInfo.of(24, "英文老师", "female");
+        //user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
+        user.setInfo(userInfo);
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
+
+        userService.save(user);*/
+
+        User one = userService.getOne(new QueryWrapper<User>().like("username", "小马7"));
+        System.out.println(one);
+    }
 
 
 }

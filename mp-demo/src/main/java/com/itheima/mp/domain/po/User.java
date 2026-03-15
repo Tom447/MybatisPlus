@@ -5,12 +5,19 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.itheima.mp.enums.UserStauts;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 
 @Data
-@TableName(value = "user")
+@TableName(value = "user", autoResultMap = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @TableId(type = IdType.AUTO)
@@ -35,12 +42,14 @@ public class User {
     /**
      * 详细信息
      */
-    private String info;
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private UserInfo info;
 
     /**
      * 使用状态（1正常 2冻结）
      */
-    private Integer status;
+
+    private UserStauts status;
 
     /**
      * 账户余额
