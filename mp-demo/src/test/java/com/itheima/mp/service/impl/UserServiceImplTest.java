@@ -1,6 +1,8 @@
 package com.itheima.mp.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.mp.domain.po.User;
 import com.itheima.mp.domain.po.UserInfo;
 import com.itheima.mp.enums.UserStauts;
@@ -196,5 +198,45 @@ class UserServiceImplTest {
         System.out.println(one);
     }
 
+
+    @Test
+    void testPageQuery1(){
+        int pageNo = 1, pageSize = 5;
+        //1.传入页码
+        Page<User> page = Page.of(pageNo, pageSize);
+        //2.排序参数，通过OrderItem来指定
+        page.addOrder(new OrderItem("balance", false));
+        //3.分页查询
+        Page<User> p = userService.page(page);
+        //分页查询结构
+        //3.1 总条数
+        System.out.println("total = " + p.getTotal());
+        //3.2 总页数
+        System.out.println("pages = " + p.getPages());
+        //3.3 分页数据
+        System.out.println("分页数据");
+        List<User> records = p.getRecords();
+        records.forEach(System.out::println);
+    }
+
+    @Test
+    void testPageQuery2(){
+        int pageNo = 1, pageSize = 5;
+        Page<User> page = Page.of(pageNo, pageSize);
+        page.addOrder(new OrderItem("balance", false));
+
+        //添加查询条件
+        QueryWrapper<User> wrapper = new QueryWrapper<>(new User())
+                .like("username", "o");
+
+        //条件分页查询
+        Page<User> p = userService.page(page, wrapper);
+        System.out.println("total = " + p.getTotal());
+        System.out.println("pages = " + p.getPages());
+        System.out.println("条件查询结果");
+        List<User> records = p.getRecords();
+        records.forEach(System.out::println);
+
+    }
 
 }
